@@ -16,7 +16,9 @@
 			
 			
 			#container {
-				position : relative;
+				position : fixed;
+				bottom: 15px;
+				right: 15px;
 				width : 370px;
 				/*margin : 0px auto;*/
 			}
@@ -128,7 +130,6 @@
 		<script src="./ext_js/Stats.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-  		
   		<script type="text/javascript" src="../build/html2canvas.js"></script>
 		<div id="content">
 			<input class="btn" type="button" value="loading..." disabled="disabled" onclick="start()" id="startbutton"></input>
@@ -139,6 +140,7 @@
 					<!--<source src="./media/franck.ogv" type="video/ogg"/>-->
 				</video>
 				<canvas id="overlay" width="400" height="300"></canvas>
+
 			</div>
 			<br/>
 			<script>
@@ -227,8 +229,42 @@
 					// start loop to draw face
 					drawLoop();
 				}
-
+				
 				var winkCount = 0;
+				var mabatakicheck = true;
+
+				// function ScreenShat() {
+				// 	console.log("aaaaaa");
+				// 	html2canvas(document.body, {
+  		// 				onrendered: function(canvas) {
+    // 						var img = canvas.toDataURL();
+    // 						console.log("bbbbbb");
+    // 						console.log(img);
+    // 						window.open(img);
+
+
+  		// 				}
+				// 	});
+				// }
+
+				var dd = new Date();
+				var mySeconds = dd.getSeconds();
+
+				var start1;
+				var start2;
+
+				function up(){
+					scrollBy(0,-1500)
+				}
+
+				function down(){
+        			scrollBy(0,500);
+        		}
+
+        		function goTop()
+				{
+  					scrollTo(0,0);
+				}
 
 				function drawLoop() {
 					requestAnimFrame(drawLoop);
@@ -276,7 +312,7 @@
 											leftMode = 0;
 										}
 										leftInterval = 10;
-										onChangeMode();
+										//onChangeMode();
 									}
 								}
 							}
@@ -291,61 +327,130 @@
 						oldNose[1] = nose[1];
 						
 
-						//overlayCC.beginPath();
-						//overlayCC.rect(270, 200, 100, 100);
 						
+						//overlayCC.beginPath();
+						overlayCC.rect(270, 200, 100, 100);
 						if (leftMode == 0) {
-						  		winkCount++;
-						  		if(winkCount == 5){
-						    		screanshot();
-						    	}
+							if(mabatakicheck == true){
+								winkCount++;
+								start1 = new Date().getTime();
+								mabatakicheck = false;
 
-							overlayCC.fillStyle = 'rgb(255, 255, 0)';
-							
+								if((winkCount % 2 ) == 0 && winkCount > 10){
+									console.log("hello");
+									down();
 
-							window.onload = function(){
-							//	winkCount++;
-									//i++;
-								//	if(winkCount == 5){
-								//		document.write("helloworld");
-										
-								//	}
+									if(winkCount >120){
+										goTop();
+										winkCount = 0;
+                                    
 
-								//var timerId = setInterval(function(){
-									
-								//		html2canvas(document.body, {
-            					//			onrendered: function(canvas) {
-                						//		document.body.appendChild(canvas);
-            							//	}
-
-            					//}
-								//	clearInterval(timerId);
-								//	}
-									
-
-
-								//}, 1000);
-							//}
-        				//});
-						} else {
-							overlayCC.fillStyle = 'rgb(255, 0, 0)';
+								}else if(winkCount < 120){
+									console.log("まばたきの回数"+winkCount);
+								}
+							}
 						}
+							
+							overlayCC.fillStyle = 'rgb(255, 255, 0)';
+						} else {
+							if(mabatakicheck == false){
+								winkCount++;
+								start2 = new Date().getTime();
+								aa();
+								mabatakicheck = true;
+
+								if((winkCount % 2 ) == 0 && winkCount > 10){
+									console.log("hello");
+									down();
+
+									if(winkCount >120){
+										goTop();
+										winkCount = 0;
+
+
+								}else if(winkCount < 120){
+									console.log("まばたきの回数"+winkCount);
+
+								}
+							}
+						}
+							
+							overlayCC.fillStyle = 'rgb(255, 0, 0)';
+							//document.write('こんにちは');
+							//alert("hello world");
+						}
+						
 						overlayCC.fill();
 						
+
 						
 						leftInterval--;
 						
 					}
-			
+				}
 				
 				// update stats on every iteration
 				document.addEventListener('clmtrackrIteration', function(event) {
 					stats.update();
 				}, false);
-			
+				
+
+				// var previousCount = 0;
+				// var isStarted = true;
+				// setInterval("checkMabataki()",3000);
+
+				// function checkMabataki(){
+				// 	if(isStarted && previousCount == winkCount){
+				// 		up();
+				// 	}
+				// 	previousCount = winkCount;
+				// }
+
+				function aa(){
+					var diff =  start2 - start1;
+
+					if(diff < 300){
+						up();
+					}
+				}
+
+
 				
 			</script>
 		</div>
+		<br><br><br><br><br><br><br><br><br><br>
+		<img src="img/blackjack_00001.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00002.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00003.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00004.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00005.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00006.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00007.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00008.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00009.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00010.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00011.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00012.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00013.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00014.jpg" alt="image" width="530" height="730">		
+		<img src="img/blackjack_00015.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00016.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00017.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00018.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00019.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00020.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00021.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00022.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00023.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00024.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00025.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00026.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00027.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00028.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00029.jpg" alt="image" width="530" height="730">
+		<img src="img/blackjack_00030.jpg" alt="image" width="530" height="730">
 		
+
+
 	</body>
 </html>
